@@ -1,7 +1,5 @@
 Why ReactiveX?
 =======
-<br/>
-
 ### Cocoa and UIKit Asynchronous APIs
 
 --------------
@@ -84,7 +82,7 @@ var currentIndex = 0
 
 다행히도 RxSwift는 이러한 점에서 비동기 코드와 동기 코드의 장점을 가져올 수 있다.
 
-
+<br/>
 
 ### Asynchronous programming glossary
 
@@ -92,7 +90,7 @@ var currentIndex = 0
 
 RxSwift를 이해하기 위해서는 용어 정리가 먼저인듯 싶다. 
 
-#####1. State, and specifically, shared mutable state 
+##### 1. State, and specifically, shared mutable state 
 
 State는 정의하기가 어렵다. state를 이해하기 위해서는 아래와 같은 연습이 필요하다. 
 
@@ -155,5 +153,6 @@ Reactive system은 다소 추상적인 용어이며, 다음과 같은 특성을 
 - Responsive : UI를 항상 최신으로 유지한다.
 - Resilient : 각 동작은 독립적으로 정의되었고, 유연한 오류 처리를 제공한다.
 - Elastic: 코드는 다양한 부하를 처리한다. 데이터 콜렉션을 가져오는데 오래 걸리는 부분, event throttling, 자원 공유 같은 것을 구현한다. 
-- Message driven : Components들은 메세지 기반 통신을 하여 향상된 재사용과 독립성 및 lifeCycle과 구현된 클래스를 분리합니다. 
+- Message driven : Components들은 메세지 기반 통신을 하여 향상된 재사용과 독립성 및 lifeCycle과 구현된 클래스를 분리한다.
 
+<br/>
