@@ -1,8 +1,8 @@
 # ReactiveX
 
 ## Rx를 시작하기 전에 알아야 할것 - 왜 Reactive Programming?
-> Reactive Programming : 데이터 흐름과 전달에 관한 프로그래밍 패러타임.
-> 객체지향 프로그래밍이 패러타임이듯이, 리액티브 프로그래밍도 하나의 패러다임이다.
+> Reactive Programming : 데이터 흐름과 전달에 관한 프로그래밍 패러다임.
+> 객체지향 프로그래밍이 패러다임이듯이, 리액티브 프로그래밍도 하나의 패러다임이다.
 
 OOP(객체지향 프로그래밍)에는 다형성, 상속 등 여러가지 특징이 있다. 
 Reactive Programming도 특징이 있다.
@@ -88,9 +88,11 @@ Rx가 Reactive Programming의 구현체라고 위에서 언급했다.
 
 Reactive Programming을 할 수 있는 프로그래밍 언어는 굉장히 많다.
 나는 그 중에서 Swift라는 언어를 쓴거고.
-RxJava는 java에서 reactive programming을 쉽고 간결하게 해주는 라이브러리고
-RxSwift도 마찬가지로 Swift에서 Reactvie programming을 쉽게 도와주는 라이브러리다.
+- RxJava는 java에서 reactive programming을 쉽고 간결하게 해주는 라이브러리
+- RxSwift도 마찬가지로 Swift에서 Reactvie programming을 쉽게 도와주는 라이브러리다.
 
 > Rx를 모를 때, 나는 RxSwift가 Swift와 비슷한 **언어**라고 생각한적이 있다. 
 > RxSwift는 라이브러리다. Alamofire와 같은 녀석이다.
 > 내가 길고 장황하게 써야 해결하는 것을 간단한 코드 몇줄만으로도 똑같은 동작을 내게 해주는 **라이브러리**다.
+
+
