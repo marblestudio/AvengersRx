@@ -382,7 +382,7 @@ class MapTransfer implements ObservableTransformer<String, String> {
 }
 ```
 
-#####사용예시
+##### 사용예시
 
 ```java
 Observable
