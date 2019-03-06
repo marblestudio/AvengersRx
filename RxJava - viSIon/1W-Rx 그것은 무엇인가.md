@@ -1,9 +1,9 @@
 # Rx 그것은 무엇인가
 Rx(Reactive Extensions)는 Observer 패턴, Iterator 패턴, 함수형 프로그래밍의 조합으로 이루어진 라이브러리입니다.
 
-*[공식 홈페이지](http://reactivex.io/)*의 설명에서도 **An API for asynchronous programming with observable streams'** 라고 나와 있을 만큼 **비동기에서의 데이터 흐름과 전달에 관한 새로운 패러다임** 을 제시하고, 그로 인해서 다양한 입출력 **이벤트 스트림의 핸들링**을 가능하게 해주는 장점이 있습니다. 특히 콜백지옥을 벗어날 수 있는 좋은 수단이 생긴 것이죠.  
+[공식 홈페이지](http://reactivex.io/)의 설명에서도 **An API for asynchronous programming with observable streams'** 라고 나와 있을 만큼 **비동기에서의 데이터 흐름과 전달에 관한 새로운 패러다임** 을 제시하고, 그로 인해서 다양한 입출력 **이벤트 스트림의 핸들링**을 가능하게 해주는 장점이 있습니다. 특히 콜백지옥을 벗어날 수 있는 좋은 수단이 생긴 것이죠.  
 
-물론 비동기 처리를 위한 방법만으로 접근한다면 Rx만이 해답은 아닙니다. Java8 에서는 기존의 Future를 비동기로써 처리하게 해주는 *[CompletableFuture](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html)*라는 좋은 API가 생기긴 했지만, *[안드로이드에서는 Java8의 API들을 제대로 활용할 수 없으니](https://developer.android.com/studio/write/java8-support.html)* 사용할 수 없습니다. Kotlin의 *[Coroutine](https://kotlinlang.org/docs/reference/coroutines.html)*도 비동기적인 프로그래밍이 가능하지만 Experimental 상태에 있었다가 Kotlin 1.3버전에서 정식 지원되기 시작했고 Best Practice 또한 찾기 힘들기 때문에 사용이 꺼려지는 상태입니다. 
+물론 비동기 처리를 위한 방법만으로 접근한다면 Rx만이 해답은 아닙니다. Java8 에서는 기존의 Future를 비동기로써 처리하게 해주는 [CompletableFuture](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html)라는 좋은 API가 생기긴 했지만, [안드로이드에서는 Java8의 API들을 제대로 활용할 수 없으니](https://developer.android.com/studio/write/java8-support.html) 사용할 수 없습니다. Kotlin의 [Coroutine](https://kotlinlang.org/docs/reference/coroutines.html)도 비동기적인 프로그래밍이 가능하지만 Experimental 상태에 있었다가 Kotlin 1.3버전에서 정식 지원되기 시작했고 Best Practice 또한 찾기 힘들기 때문에 사용이 꺼려지는 상태입니다. 
 
 하지만 이러한 장점에도 불구하고 진입장벽이 어느 정도 있다는 단점도 같이 가지고 있습니다.
 
@@ -13,7 +13,7 @@ Rx(Reactive Extensions)는 Observer 패턴, Iterator 패턴, 함수형 프로그
 
 일단 안드로이드에서 많이 사용하는 RxJava 기준으로 쓰겠습니다.
 
-최신 버전의 Gradle Dependancy 추가는 *[RxJava Github](https://github.com/ReactiveX/RxJava)*를 참고하시면 됩니다.
+최신 버전의 Gradle Dependancy 추가는 [RxJava Github](https://github.com/ReactiveX/RxJava)를 참고하시면 됩니다.
 
 ```groovy
 implementation "io.reactivex.rxjava2:rxjava:2.x.y" // gradle 추가의 예시
@@ -159,7 +159,7 @@ Rx에서 이런 Create 부분을 수행할 수 있는 클래스로는 5가지가
 
 
 
-자세한 메서드들의 대한 설명은 *[Rx documentation](http://reactivex.io/documentation/operators.html#creating)*을 참고하시고, 우선은 가장 기본이 되는 **create**에 대하여 설명하겠습니다.
+자세한 메서드들의 대한 설명은 [Rx documentation](http://reactivex.io/documentation/operators.html#creating)을 참고하시고, 우선은 가장 기본이 되는 **create**에 대하여 설명하겠습니다.
 
 ```java
 Observable
@@ -316,7 +316,7 @@ Combine 부분은 Rx의 다양한 Operator들과 Transform을 이용해 데이�
 
 
 
-예시에서는 Operator 중에서 자주 사용하고 java8의 *[Stream API](https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html)*에도 존재하는 map이라는 Operator를 사용했습니다.
+예시에서는 Operator 중에서 자주 사용하고 java8의 [Stream API](https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html)에도 존재하는 map이라는 Operator를 사용했습니다.
 
 ```java
 Observable
@@ -342,7 +342,7 @@ public interface Function<T, R> {
 
 
 
-이상 map이라는 Operator에 대하여 설명했는데 Rx의 Operator는 정말 많고 다양하기 때문에 하나하나 설명하기는 힘들기 때문에 *[Rx documentation](http://reactivex.io/documentation/operators.html#transforming)*을 참조해주시면 되겠습니다. 
+이상 map이라는 Operator에 대하여 설명했는데 Rx의 Operator는 정말 많고 다양하기 때문에 하나하나 설명하기는 힘들기 때문에 [Rx documentation](http://reactivex.io/documentation/operators.html#transforming)을 참조해주시면 되겠습니다. 
 
 
 
@@ -483,7 +483,7 @@ Observable
 
 
 
-이외에도 *[Do](http://reactivex.io/documentation/operators/do.html)*라는 Operator를 통해서 subscribe에서 원하는 타이밍에서의 핸들링이 가능합니다.
+이외에도 [Do](http://reactivex.io/documentation/operators/do.html)라는 Operator를 통해서 subscribe에서 원하는 타이밍에서의 핸들링이 가능합니다.
 
 
 
