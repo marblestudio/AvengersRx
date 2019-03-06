@@ -156,3 +156,56 @@ Reactive system은 다소 추상적인 용어이며, 다음과 같은 특성을 
 - Message driven : Components들은 메세지 기반 통신을 하여 향상된 재사용과 독립성 및 lifeCycle과 구현된 클래스를 분리한다.
 
 <br/>
+
+-----------------------------
+
+### ThanOS 생각
+
+위의 내용은 RxSwift Ray wenderlich의 책을 직역한 내용이다. 아무래도 두서 없이 직역하다보니 정리가 안되는데, 위의 책 내용의 결론은 아래와 같다고 판단된다.
+
+- 기존 Apple의 비동기 API는 너무 다양해서 비동기 코드가 일관성이 없어진다. 
+- 기존의 비동기 코드는 mutable한 data를 가지고 관리를 하다보니 힘들어진다.
+- **RxSwift**는 immutable한 data를 비동기 코드로 작성 할 수 있다. (map, filter)
+- **RxSwift**는 schedule 관리도 직접 할 수 있으며 side effect도 관리하기 편해진다.
+
+이 외에도 아래 Reactive X를 써야하는 이유에 대해 정리해 보았다.
+
+#####1. 간편한 데이터 동기화
+
+ A steam에 의해 B stream이 영향을 받는 경우, A만 바꿔도 B가 자동으로 바꿀 수 있도록 구성할 수 있어서, 데이터의 동기화를 간편하게 할 수 있다. 이러한 이유는 A와 B stream 사이의 관계를 `선언적`으로 선언했기 때문에 가능하다.
+
+<br/>
+
+##### 2.Extension
+
+사실 이미 RxSwift를 안쓰고도 충분히 어떤 데이터의 변경사항을 감지하여 대응하도록 구현은 할 수 있다. [Observer pattern](https://en.wikipedia.org/wiki/Observer_pattern)을 통해 이를 구현가능하지만, Rx는 옵저버 패턴에서 조금 더 확장 된 개념이다. 
+
+![ReactiveX](./images/WhatReactiveX.png)
+
+위 사진은 [Reactive X](http://reactivex.io/intro.html)에 나와 있는 정의이다. 이처럼 Rx는 옵저버 패턴을 확장시켜 low-level, threading, synchronization, thread-safety, concurrent data structure, non-blocking I/O를 지원해준다. 
+
+Reactive x는 Reactive Programming을 잘 쓰도록 도와주는 Extension이다. RxSwift는 Swift를 Reactive 프로그래밍을 쓰도록 도와주는데, 여기서 많은 operator를 통해 다양한 연산을 도와준다. (사실 operator가 Rx를 쓰는데 가장 큰 이유중 하나라고 생각한다.)  복잡한 코드를 Operator를 이용하여 간단하고, 쉽게 개발이 가능하다는 말이다.
+
+<br/>
+
+##### 3.Schedulers
+
+Rx의 또 다른 장점 스케쥴러 관리가 용이하다는 점이다. 예를 들면 백그라운드에서 API통신을 하고 결과값을 받아 UI를 그릴때는 메인 스레드에서 그려줘야한다. Rx는 이러한 스케쥴 변경을 쉽게 행할 수 있다.
+
+Rx를 하다보면 ObserveOn, SubscribeOn을 통해 스케쥴러 관리가 용이해지는데 이는 다음 시간에 조금 더 알아보도록 하겠다.
+
+![Schedulers](./images/Schedulers.png)
+
+<br/>
+
+##### 4.RxSwiftCommunity
+
+커뮤니티를 통해 Rx가 더욱 활성화가 되고 있다는 점이다. 이 부분은 모든 언어가 그렇지만 이 곳에서 활성화 된 라이브러리들이 복잡한 UI 구성을 도와주던가, 복잡한 아키텍처를 해결해주던가 여러 부분에서 간단하게 처리하도록 도와준다.
+
+- [RxGesture](https://github.com/RxSwiftCommunity/RxGesture)
+- [RxKeyboard](https://github.com/RxSwiftCommunity/RxKeyboard)
+- [ReactorKit](https://github.com/ReactorKit)
+- [기타등등..](https://github.com/RxSwiftCommunity?utf8=%E2%9C%93&q=&type=&language=)
+
+하지만 이러한 라이브러리들을 제대로 알고 사용하려면.. 역시 Rx가 무엇인지 제대로 알아야 할 것이다. 
+
