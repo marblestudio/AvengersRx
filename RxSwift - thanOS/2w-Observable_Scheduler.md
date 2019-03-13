@@ -2,7 +2,7 @@ Observable
 =======
 ### Cocoa and UIKit Asynchronous APIs
 
-#####  1. Observable<T>
+##### Observable<T>
 
 immutable한 T타입의 비동기 이벤트 시퀀스를 발생시킨다. 
 Observable<T>는 한개 이상의 옵저버들이 실시간으로 어떤 이벤트에 반응하여 앱 UI를 업데이트하거나 들어오는 데이터를 처리할 수 있다. 
@@ -235,5 +235,42 @@ empty와 반대로 never는 complete조차 emit되지 않는다. 위 코드를 �
 
 Observabel은 **subscription**이 있을 때까지 아무것도 안한다는 것을 꼭 명심해야한다. subscription은 Observabel이 이벤트를 방출하기 위한 트리거이다. error나 complete가 방출 되어야 종료한다. 물론 Observable의 subscription을 취소할 수 있다. 
 
+~~~swift
+// 1
+let observable = Observable.of("A", "B", "C")
+// 2
+let subscription = observable.subscribe { event in
+// 3
+print(event)
+}
+~~~
 
+1. string을 갖는 옵저버블을 만든다.
+2. 옵저버블을 구독하면, subscription 상수에 disposable이 return 된다.
+3. emit된 event들이 print된다.
+
+구독을 취소하려면 dispose()를 호출하면 된다. 그러면 옵저버블 이벤트가 발생하지 않는다.
+
+~~~swift
+subscription.dispose()
+~~~
+
+하지만 이처럼 각 subscritpion들을 따로따로 dispose()를 해주는것은 아주 귀찮은 일이다. 그럴때 우리는 **disposed(by:)** 메소드를 이용해주면 된다. 
+
+~~~swift
+// 1
+let disposeBag = DisposeBag()
+// 2
+Observable.of("A", "B", "C")
+    .subscribe { // 3
+		print($0) }
+    .disposed(by: disposeBag) // 4
+~~~
+
+1. dispose bag 생성
+2. observable 생성
+3. 옵저버블 구독 후 emit event 출력
+4. subscribe로 부터 return 된 값에 disposeBag 추가
+
+만약 위와 같이 dispose를 안한다면...?? ... 메모리 누수가 일어날 것이다.. 메모리 릭은 안돼 ~ !! 하지만 우리 swift는 dispose를 안할때마다 경고를 날려줄 것이니 우리프트만 믿고 가자
 
