@@ -24,3 +24,18 @@ Observable은 다음 3가지의 이벤트만 방출한다.
 ![ObservableSequence](./images/2w/MultipleObservers.png)
 
 Observable은 Observable, Observer 자체와 연결되는 것이 아니다. **이벤트 시퀀스**를 이용하기 때문에, delegate 프로토콜을 이용할 필요도 없고, class간의 통신을 위해 클로져를 삽입 할 필요가 없다. 
+
+<br/>
+
+### What is Observable??
+
+흔히들 Observable, Observable Sequence, Sequence를 많이 들었을 것이다. 이것들은 사실 같은 의미이다.  다른 플랫폼의 리액티브 프로그래밍에서는 Stream이라고도 한다. 의미는 같지만 RxSwift에서는 시퀀스라고 부른다.
+
+어쨌든 중요한것은 **비동기적**이라는 것이다.
+
+Observable들은 이벤트를 생성하는데, 이것을 **Emitting**이라고 한다. 이벤트들은 숫자나 커스텀 타입의 인스턴스를 가질 수 있으며  탭과 같은 제스쳐들을 인식할 수 있다.
+
+
+
+
+
