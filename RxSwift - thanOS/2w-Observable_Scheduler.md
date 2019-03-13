@@ -1,9 +1,6 @@
 Observable
 =======
-### Cocoa and UIKit Asynchronous APIs
-
-##### Observable<T>
-
+#####  1. Observable<T>
 immutable한 T타입의 비동기 이벤트 시퀀스를 발생시킨다. 
 Observable<T>는 한개 이상의 옵저버들이 실시간으로 어떤 이벤트에 반응하여 앱 UI를 업데이트하거나 들어오는 데이터를 처리할 수 있다. 
 
