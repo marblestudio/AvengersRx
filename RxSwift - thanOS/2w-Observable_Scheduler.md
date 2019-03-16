@@ -271,3 +271,153 @@ Observable.of("A", "B", "C")
 
 만약 위와 같이 dispose를 안한다면...?? ... 메모리 누수가 일어날 것이다.. 메모리 릭은 안돼 ~ !! 하지만 우리 swift는 dispose를 안할때마다 경고를 날려줄 것이니 우리프트만 믿고 가자
 
+<br/>
+
+<br/>
+
+# Scheduler
+
+개발을 하다보면 스레드들을 관리하는 일이 많다. 가령 네트워크 통신을 백그라운드 스레드에서 처리하다가 UI는 메인스레드에서 처리해야하는 일이 자주 일어난다. 스레드 관리를 유연하게 관리해야 하는 경우가 생기는데, Rx는 이러한 스레드를 관리하기 위해 scheduler가 있다. 
+
+> _Scheduler와 스레드는 엄연히 다르다고 생각한다. scheduler는 스레드를 관리하는 친구라고 생각한다._
+
+<br/>
+
+
+#### ObserveOn, SubscribeOn
+
+Rx 스케줄러를 사용한다면 필수적으로 알아야 할 2가지 연산자이다.
+
+- SubscribeOn
+
+  -> SubscribeOn 연산자는 시퀀스가 연산을 위해 사용할 스레드를 지정하며, 아무 곳에서 호출해도 문제되지 않는다.
+
+- ObserveOn
+
+  -> 반면에 ObserveOn 연산자는 호출하는 시점이 중요하다. 호출 이후의 연산자들은 이 ObserveOn에 따라 스레드가 관리된다.
+
+<br/>
+
+~~~swift
+let backgroundScheduler = SerialDispatchQueueScheduler(globalConcurrentQueueQOS: .Default)
+
+	[1,2,3,4,5].toObservable()
+		.subscribeOn(MainScheduler.instance) 	// 1
+		.doOnNext {
+			UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+			return $0
+		} 		// 2
+		.observeOn(backgroundScheduler) // 3
+		.flatMapLatest {
+			HTTPBinDefaultAPI.sharedAPI.get($0)
+		}		// 4
+		.observeOn(MainScheduler.instance) 		// 5
+		.subscribe {
+			UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+			print($0)
+		}		// 6
+~~~
+
+1. 시퀀스가 동작하는 스케쥴러를 메인으로 지정
+2. 1에서 메인으로 지정하였기에 해당 코드는 메인에서 실행 된다.
+3. 시퀀스를 백그라운드로 지정함으로 이후에 호출되는 연산자들은 백그라운드에서 실행된다.
+4. HTTP 통신은 백그라운드에서 동작한다.
+5. Main으로 다시 변경하여 이후에 호출되는 연산자는 메인에서 실행된다.
+6. 메인에서 동작함
+
+<br/>
+
+### Driver(RxCocoa)
+
+Driver는 RxCocoa에서 지원해주고 있다. UI 작업에 좀 더 직관적으로 사용하도록 사용한다. Driver는 MainScheduler만 사용하도록 하는것인데, 데이터를 UI에 drive한다고 해서 이름을 Driver로 지었다고 한다.
+
+<br/>
+
+~~~swift
+var driverObserveOnScheduler: SchedulerType = MainScheduler.instance
+public func asDriver(onErrorDriveWith onErrorDriveWith: Driver<E>) -> Driver<E> {
+    let source = self
+        .asObservable()
+        .observeOn(driverObserveOnScheduler)
+        .catchError { _ in
+            onErrorDriveWith.asObservable()
+        }
+    return Driver(source)
+}
+
+public struct Driver<Element> : DriverConvertibleType {
+    public typealias E = Element
+
+    let _source: Observable<E>
+
+    init(_ source: Observable<E>) {
+        self._source = source.shareReplayLatestWhileConnected()
+    }
+}
+~~~
+
+Driver가 구현된 코드이다. 코드에서 보는것 처럼 Main에서 동작하도록 구현되어 있다. 또한 error도 내려주지 않는다. (빠꾸없는 친구다) 
+
+<br/>
+
+##### why Driver?
+
+~~~swift
+// Using Driver	
+let results = query.rx_text.asDriver()
+    .throttle(0.3, scheduler: MainScheduler.instance)
+    .flatMapLatest { query in
+        fetchAutoCompleteItems(query)
+            .asDriver(onErrorJustReturn: [])
+    }
+
+results
+    .map { "\($0.count)" }
+    .drive(resultCount.rx_text)
+    .addDisposableTo(disposeBag)
+
+results
+    .drive(resultTableView.rx_itemsWithCellIdentifier("Cell")) { (_, result, cell) in
+        cell.textLabel?.text = "\(result)"
+    }
+    .addDisposableTo(disposeBag)
+~~~
+
+<br/>
+
+~~~swift
+// Using Observable	
+let results = query.rx_text
+    .throttle(0.3, scheduler: MainScheduler.instance)
+    .flatMapLatest { query in
+        fetchAutoCompleteItems(query)
+            .observeOn(MainScheduler.instance)
+            .catchErrorJustReturn([])
+    }
+    .shareReplay(1)
+
+results
+    .map { "\($0.count)" }
+    .bindTo(resultCount.rx_text)
+    .addDisposableTo(disposeBag)
+
+results
+    .bindTo(resultTableView.rx_itemsWithCellIdentifier("Cell")) { (_, result, cell) in
+        cell.textLabel?.text = "\(result)"
+    }
+    .addDisposableTo(disposeBag)
+~~~
+
+Observable과 driver의 차이이다. fetchAutoCompleteItems에 driver는 main으로 알아서 지정해준다. 그리고 driver는 subscription 공유도 지원해주므로 shareReplay 연산자를 사용하지 않아도 된다.
+
+정말 UI를 위해 태어난 친구다..!
+
+
+
+출처 
+
+- https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Schedulers.md
+- http://minsone.github.io/programming/reactive-swift-observable-vs-driver
+
+
+
