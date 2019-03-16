@@ -224,3 +224,50 @@ Subject 클래스는 Observable의 속성과 Subscriber의 속성 모두를 갖�
 
 지금까지 Observable에 대해서 깊게는 아니지만, 대략적인 컨셉을 보는 정도의 느낌적인 느낌으로 알아보았다.
 생각보다 양이 많아서 Scheduler는 다음에 알아보아야겠다.
+
+---
+
+## 비동기 처리
+
+- subscribeOn과 observeOn을 이용하여 비동기 처리를 쉽게 할 수 있다.
+- defer() 함수를 이용한 예제를 살펴본다.
+- defer()는 구독하는 순간 Observable를 그대로 전달하는 함수이다.
+
+
+---
+
+```{.java}
+        println(Thread.currentThread().name + ", create observable")
+        val observable = Observable.defer {
+            println(Thread.currentThread().name + ", defer function call")
+            Observable.just("HelloWorld")
+        }
+        
+        println(Thread.currentThread().name + ", do subscribe")
+        observable
+            .subscribeOn(Schedulers.computation()) // computation thread 에서 defer function 이 실행됩니다.
+            .observeOn(Schedulers.newThread()) // 새로운 thread 에서 Subscriber 로 이벤트가 전달됩니다.
+            .subscribe{text -> println("${Thread.currentThread().name}, onNext : $text")}
+
+        println(Thread.currentThread().name + ", after subscribe")
+```
+출력될 결과를 예상해보자.
+
+---
+
+**결과 출력**
+```
+I/System.out: main, create observable
+I/System.out: main, do subscribe
+I/System.out: main, after subscribe
+I/System.out: RxComputationThreadPool-3, defer function call
+I/System.out: RxNewThreadScheduler-1, onNext : HelloWorld
+```
+
+총 3개의 스레드에서 동작이 이루어졌다.
+
+---
+
+### 정리하면 
+- subscribeOn() : 구독자가 Observable에 구독을 할 때, 실행되는 스레드를 지정. **구독이 이루어지는 스레드**
+- observeOn() : Observable에서 생성한 데이터가 처리되는 동작이 어느 스레드에서 일어날 지 지정. **이벤트를 처리하는 스레드**
