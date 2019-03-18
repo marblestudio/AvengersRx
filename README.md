@@ -9,7 +9,7 @@
 
 - [HYDRxA - Observable](https://github.com/marblestudio/AvengersRx/blob/master/RxJava%20-%20HYDRxA/2week%20-%20Observable.md)
 - [thanOS - Observable_Scheduler](https://github.com/marblestudio/AvengersRx/blob/master/RxSwift%20-%20thanOS/2w-Observable_Scheduler.md)
-<br/>
+
 ## Subject & Relay
 
 ## Operator
