@@ -51,9 +51,83 @@ just를 한것과 결과 동일.
 
 ### interval
 일정 시간 간격으로 데이터를 발행한다.
+특이사항(?)은 스케쥴러를 지정해줘야 한다. 
 
 ~~~swift 
 Observable<Int>.interval(1.0, scheduler: MainScheduler.instance).subscribe(onNext: { num in
-		print(num)
+print(num)
 })
 ~~~
+
+결과 : 0 1 2 3 .....
+
+interval은 기본적으로 **영원히 지속**되기 때문에 폴링용도로 많이 사용.
+
+### timer
+timer는 interval과 유사하지만 **한 번만** 실행하는 실행하는 오퍼레이터다.
+지정된 시간 이후에 한개의 데이터를 발행하고, onComplete()이벤트가 발생한다. 
+
+~~~swift 
+Observable<Int>.timer(2, scheduler: MainScheduler.instance).subscribe(onNext: { (num) in
+            print(num)
+        }, onCompleted: {
+            print("on complete")
+        })
+~~~
+
+결과: 0 "on complete"
+
+보통 일정시간이 지난 후 어떤 동작을 하고 싶을 때 사용.
+
+### range
+range는 주어진 값(n) 부터 m개의 integer객체를 발행한다.
+
+~~~swift 
+Observable<Int>.range(start: 1, count: 100).subscribe(onNext: { (num) in
+            print(num)
+        }, onCompleted: {
+            print("on completed")
+        })
+~~~
+
+결과: 1 2 3 4 ... 99 100 "on completed"
+스케쥴러를 따로 지정 x, 즉 현재 쓰레드에서 실행. 즉, range오퍼레이터는 for, while문을 대체 할 수 있음.
+
+### intervalRange(RxSwift x)
+그냥 interval + Range를 합친거
+interval처럼 일정한 시간 간격으로 값을 발행하지만 range처럼 n부터 m개의 값만 발행하고 onComplete()발생.
+즉, interval처럼 무한히 값을 발행하지 x
+
+
+RxSwift에는 없는 오퍼레이터인데, 있는 오퍼레이터를 가지고 만들 수 있다. 
+
+~~~swift 
+let interval = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+let range = Observable.range(start: 1, count: 10)
+ Observable.zip(interval, range)
+           .subscribe(onNext : { (_, num) in
+                print(num)
+            }, onCompleted: {
+                print("on complete")
+            })
+~~~
+
+결과: 1 2 3....9 10 "on complete"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
