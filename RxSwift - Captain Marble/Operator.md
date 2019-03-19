@@ -114,11 +114,36 @@ let range = Observable.range(start: 1, count: 10)
 
 결과: 1 2 3....9 10 "on complete"
 
+### defer 
+
+> do not create the Observable until the observer subscribes, and create a fresh Observable for each observer
+
+defer는 timer와 비슷하지만 데이터 흐름 생성을 구독자가 ```subscribe()```를 호출할 때 까지 미룰 수 있다.
+즉, ```subscribe``` 하는 순간 새로운 ```Observable```생성
 
 
+//defer 마블 다이어그램
 
+defer의 핵심은 "and create a fresh Observable for each observer"
+구독할 때 마다 새로운 Observable로 만들어지므로 최신의 데이터를 받을 수 있음.
 
+~~~swift 
+func permissionObservable() -> Observable<PHAuthorizationStatus> {
+	return .just(PHPhotoLibrary.authorizationStatus())
+}
+~~~
 
+사진 접근 권한 얻어오는 코드.
+위 코드는 ```subscribe```할 때의 접근권한 상태를 가져오는게 아니라, Observable이 만들어질 그 때의 상태를 가져옴. 만들어질때와 subscribe할 때의 사진 권한은 다를 수 있음. 이때 defer를 쓰면 유용하다.
+
+~~~swift 
+func permissionObservable() -> Observable<PHAuthorizationStatus> {
+	return Observable.deferred {
+		return .just(PHPhotoLibrary.authorizationStatus())
+	}
+}
+~~~
+> RxSwift에서는 ```deferred```라는 이름으로 있다. 
 
 
 
