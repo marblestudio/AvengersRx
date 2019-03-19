@@ -74,23 +74,38 @@ Observable이 배출한 항목에 **연속적으로** 함수를 적용하고 실
 ```reduce()```와 비슷. reduce는 Observable에서 모든데이터가 입력된 후, 그것을 종합하여 마지막 1개의 데이터만을 subscriber에게 발행한다.
 반면 scan은 실행할 때 마다 **중간 결과 및 최종결과**를 subscriber에게 발행.
 
+~~~swift
+  Observable.of(1,2,3,4,5,6,7,8,9,10)
+            .reduce(0, accumulator: +)
+            .subscribe(onNext: { (num) in
+                        print(num)
+            }, onCompleted: {
+                        print("on complete")
+            })
+~~~
+
+결과: 55 "on complete"
 
 
+~~~swift
+ Observable.of(1,2,3,4,5,6,7,8,9,10)
+           .scan(0, accumulator: +)
+           .subscribe(onNext: { (num) in
+                  print(num)
+             }, onCompleted: {
+                  print("on complete")
+             })
+~~~
+결과:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+1
+3
+6
+10
+15
+21
+28
+36
+45
+55
+"on complete"
