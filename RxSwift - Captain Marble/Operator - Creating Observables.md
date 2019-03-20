@@ -122,7 +122,7 @@ defer는 timer와 비슷하지만 데이터 흐름 생성을 구독자가 ```sub
 즉, ```subscribe``` 하는 순간 새로운 ```Observable```생성
 
 
-//defer 마블 다이어그램
+![defer](./images/defer)
 
 defer의 핵심은 "and create a fresh Observable for each observer"
 구독할 때 마다 새로운 Observable로 만들어지므로 최신의 데이터를 받을 수 있음.
