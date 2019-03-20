@@ -42,7 +42,8 @@ flatMap 마블 다이어그램을 보면, flatMap()은 먼저 들어온 데이�
 
 switchMap은 또 concatMap이랑은 다름.
 concatMap()이 인터리빙이 발생 할 수 있는 상황에서 동작의 순서를 보장해준다면, switchMap()은 순서를 보장하기 위해 기존에 진행중이던 작업을 바로 중단합니다. 
-// switchMap 마블 다이어그램
+![deferred](./images/switchMap.png)
+
 
 즉 마지막에 들어온 데이터의 처리는 보장한다!
 switchMap은 센서의 값을 얻어와서 처리하는 경우 유용하다. 센서값은 중간값보다는 최종적인 값으로 결과를 처리하는 경우가 많기 때문.
