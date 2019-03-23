@@ -77,7 +77,7 @@ Subject는 위에서 살펴봤듯이 비 Rx적인 API들을 Rx답게 사용해 �
 
 Relay는 이런 Subject의 onComplete혹은 onError를 호출 한 후에는 더 이상 데이터를 emit 할 수 없다는 문제를 해결하기 위해 만든 라이브러리이다.
 
-즉, Relay는 기본적으로 **Subject와 비슷한 특성**을 가지지만 **onComplte 및 onError가 없기 때문에 끊임없이 데이터를 emit 할 수 있다.**
+즉, Relay는 기본적으로 **Subject와 비슷한 특성**을 가지지만 **onComplete 및 onError가 없기 때문에 끊임없이 데이터를 emit 할 수 있다.**
 
 
 
