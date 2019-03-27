@@ -67,12 +67,10 @@ asyncSubject.onCompleted()
 
 자, 이제 콘솔에 뭔가가 찍힐것이다. 
 
-**
-subscriber 1 : marshmello
+**subscriber 1 : marshmello
 subscriber 2 : marshmello
 subscriber 1 on completed
-subscriber 2 on completed
-**
+subscriber 2 on completed**
 
 
 
