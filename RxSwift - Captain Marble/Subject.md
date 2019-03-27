@@ -47,3 +47,48 @@ asyncSubject.subscribe(onNext: { (string) in
 ~~~
 자 위와같은 코드가 있다고 생각해보자.
 asyncSubject라는 ```AsyncSubject```인스턴스를 만들고 걔를 subscribe를 2번했다. 2명의 구독자가 생긴것이다.
+
+하지만 콘솔에는 아무것도 출력이 되지 않는다. 
+지금까지는 당연하다. asyncSubject가 아무 데이터를 발행하지 않았기 때문이다.
+발행해볼까?
+
+~~~swift 
+asyncSubject.onNext("zedd")
+asyncSubject.onNext("marshmello")
+~~~
+
+자 데이터를 발행했지만, 여전히 콘솔에는 아무것도 찍히지 않는다.
+왜냐? 위에서 AsyncSubject의 정의를 봤듯이, AsyncSubject가 onComplete되지 않는 이상 데이터는 subscriber들에게 오지 않는다.
+asyncSubject를 onComplete시켜보자.
+
+~~~swift 
+asyncSubject.onCompleted()
+~~~
+
+자, 이제 콘솔에 뭔가가 찍힐것이다. 
+
+**
+subscriber 1 : marshmello
+subscriber 2 : marshmello
+subscriber 1 on completed
+subscriber 2 on completed
+**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
