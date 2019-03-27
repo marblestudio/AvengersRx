@@ -99,14 +99,87 @@ asyncSubject가 onCompleted를 호출하고 나서, 데이터를 한번 더 발�
 // 퀴즈
 
 
+## BehavioirSubject
+
+옵저버가 BehaviorSubject를 구독하기 시작하면, 옵저버는 소스 Observable이 가장 최근에 발행한 항목(또는 아직 아무 값도 발행되지 않았다면 맨 처음 값이나 기본 값)의 발행을 시작하며 그 이후 소스 Observable(들)에 의해 발행된 항목들을 계속 발행한다.
+
+// 마블 다이어그램
+
+```BehaviorSubject```에서 주요 하게 봐야 할 부분은 **초기값**이다. 
+초기값을 생성시에 넣어주게 되어있다. 
+코드로 보도록 하자. 
+
+~~~swift 
+let behaviorSubject = BehaviorSubject<String>(value: "Zedd")
+behaviorSubject.subscribe(onNext: { (string) in
+            print(string)
+        }, onCompleted: {
+            print("subscriber 1 on completed")
+})
+~~~
+BehaviorSubject를 초기화 할 때, value에 초기값을 넣어준 것을 볼 수 있다.
+위 코드의 결과는 어떻게 되겠는가?
+
+"Zedd"라는 초기값을 넣어줬으므로 subscribe하면 "Zedd"가 찍히게 된다.
 
 
+~~~swift 
+let behaviorSubject = BehaviorSubject<String>(value: "Zedd")
+behaviorSubject.subscribe(onNext: { (string) in
+            print(string)
+        }, onCompleted: {
+            print("subscriber 1 on completed")
+        })
+behaviorSubject.onNext("marshmello")
+~~~
+
+자, 위 코드의 결과는 어떻게 될까?
+결과는
+**Zedd\
+marshmello**
+가 나오게 된다. 
+
+위에 숫자로 표기했는데, 
+일단 초기값인 Zedd가 나오게 되고 onNext하는 순간 subscriber가 데이터발행을 받으므로 marshmello가 찍히게 된다.
+
+~~~swift 
+let behaviorSubject = BehaviorSubject<String>(value: "Zedd")
+behaviorSubject.subscribe(onNext: { (string) in
+            print("subscriber 1  \(string)")
+        }, onCompleted: {
+            print("subscriber 1 on completed")
+        })
+        
+behaviorSubject.onNext("marshmello")
+        
+behaviorSubject.subscribe(onNext: { (string) in
+            print("subscriber 2  \(string)")
+        }, onCompleted: {
+            print("subscriber 2 on completed")
+})
+~~~
+
+위 코드의 결과는 어떻게 나올까?
+
+//퀴즈
 
 
+```BehaviorSubject```도 ```asyncSubject```처럼
+만약, 소스 Observable이 오류 때문에 종료되면 BehaviorSubject는 아무런 항목도 배출하지 않고 소스 Observable에서 발생한 오류를 그대로 전달한다.
+
+//마블 다이어그램
+
+## PublishSubject
+
+PublishSubject는 구독 이후에 소스 Observable(들)이 배출한 항목들만 옵저버에게 배출한다.
+
+주의할 점은, PublishSubject는 (이를 막지 않는 이상) 생성 시점에서 즉시 항목들을 배출하기 시작할 것이고 이런 특성 때문에 주제가 생성되는 시점과 옵저버가 이 주제를 구독하기 시작하는 그 사이에 배출되는 항목들을 잃어 버릴 수 있다는 단점이 있다. \
+따라서, 소스 Observable이 배출하는 모든 항목들의 배출을 보장해야 한다면 Create을 사용해서 명시적으로 "차가운" Observable(항목들을 배출하기 전에 모든 옵저버가 구독을 시작했는지 체크한다)을 생성하거나, PublishSubject 대신 ReplaySubject를 사용해야 한다.
 
 
+PublishSubject에서 가장 중요한 점은 **구독 이후에**라는 말이다.
 
-
+먼저 마블 다이어그램을 보자. 
 
 
 
