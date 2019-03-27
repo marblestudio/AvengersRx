@@ -72,7 +72,31 @@ subscriber 2 : marshmello\
 subscriber 1 on completed\
 subscriber 2 on completed**
 
+자, zedd는 출력이 안되고 marshmello만 출력이 된 것을 볼 수 있다. 그리고 subscribe들도 같이 종료가 된다.
+마블다이어그램을 같이 보면서 예제를 보면 더욱 더 이해가 잘 갈것이다.
 
+그럼 한가지 상황을 더 가정해보자.
+~~~swift 
+asyncSubject.onCompleted()
+~~~
+를 하고 나서, asyncSubject가 데이터를 하나 더 발행하고, subscriber가 하나 더 생긴다면 어떻게 될까?
+
+코드로 살펴보자.
+~~~swift
+asyncSubject.onCompleted()
+asyncSubject.onNext("kygo")
+        
+asyncSubject.subscribe(onNext: { (string) in
+            print("subscriber 3 : \(string)")
+        }, onCompleted: {
+            print("subscriber 3 on completed")
+})
+~~~
+
+asyncSubject가 onCompleted를 호출하고 나서, 데이터를 한번 더 발행하고 subscribe도 한번 더 해봤다.
+결과는?
+
+// 퀴즈
 
 
 
