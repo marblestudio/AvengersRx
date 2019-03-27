@@ -43,6 +43,7 @@ asyncSubject.subscribe(onNext: { (string) in
             print("subscriber 2 : \(string)")
         }, onCompleted: {
             print("subscriber 2 on completed")
-})~~~
+})
+~~~
 자 위와같은 코드가 있다고 생각해보자.
 asyncSubject라는 ```AsyncSubject```인스턴스를 만들고 걔를 subscribe를 2번했다. 2명의 구독자가 생긴것이다.
