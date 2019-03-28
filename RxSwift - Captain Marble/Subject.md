@@ -181,9 +181,18 @@ PublishSubject에서 가장 중요한 점은 **구독 이후에**라는 말이�
 
 먼저 마블 다이어그램을 보자. 
 
+```AsyncSubject```처럼 마지막 데이터만 발행하거나, ```BehaviorSubject```처럼 발행한 값이 없을 때, 기본값으 대신 발행하지도 않는다.
+해당 시간에 발생한 데이터를 **그대로** subscriber에게 전달한다. 
 
 
+~~~swift 
+let publishSubject = PublishSubject<String>()
+        
+publishSubject.subscribe { (string) in
+            print(string)
+}
+~~~
 
-
+아직까지 
 
 
