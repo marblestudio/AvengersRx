@@ -193,6 +193,66 @@ publishSubject.subscribe { (string) in
 }
 ~~~
 
-아직까지 
+이렇게 해놓고.
+
+~~~swift 
+let publishSubject = PublishSubject<String>()
+        
+publishSubject.subscribe { (string) in
+        print(string)
+}
+        
+Observable<Int>.interval(1.0, scheduler: MainScheduler.instance).subscribe(onNext: { num in
+        publishSubject.onNext("\(num)")
+})
+~~~
+
+이렇게 하면,
+**next(1)\
+next(2)\
+...**
+이렇게 결과가 나오게 된다. 
+그냥 제일 평범한(?) Subject라고 생각하며 된다.
+
+## ReplaySubject
+
+드디어 마지막! ReplaySubject이다.
+ReplaySubject는 subscriber가 새로 생기면, 항상 데이터의 처음부터 끝까지 발행하는것을 **보장**해준다.\
+그래서 **Replay**가 아닐까?
+> 모든 데이터의 내용을 저장해두는 과정 중 memory leak이 발생할 가능성을 염두에 둬야한다. 
+
+마블 다이어그램을 보자. 
+
+//다이어그램
+
+두번쨰 구독자가 구독했을 때, 지금까지 발행한 모든 값을 두번쨰 구독자에게 모두 주는 것을 볼 수 있다.
+
+~~~swift 
+let publishSubject = PublishSubject<String>()
+        
+publishSubject.subscribe { (string) in
+        print(string)
+}
+        
+Observable<Int>.interval(1.0, scheduler: MainScheduler.instance).subscribe(onNext: { num in
+        publishSubject.onNext("\(num)")
+})
+~~~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
