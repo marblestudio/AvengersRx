@@ -181,7 +181,7 @@ PublishSubject에서 가장 중요한 점은 **구독 이후에**라는 말이�
 
 먼저 마블 다이어그램을 보자. 
 
-```AsyncSubject```처럼 마지막 데이터만 발행하거나, ```BehaviorSubject```처럼 발행한 값이 없을 때, 기본값으 대신 발행하지도 않는다.
+```AsyncSubject```처럼 마지막 데이터만 발행하거나, ```BehaviorSubject```처럼 발행한 값이 없을 때, 기본값을 대신 발행하지도 않는다.
 해당 시간에 발생한 데이터를 **그대로** subscriber에게 전달한다. 
 
 
@@ -207,7 +207,7 @@ Observable<Int>.interval(1.0, scheduler: MainScheduler.instance).subscribe(onNex
 })
 ~~~
 
-이렇게 하면,
+이렇게 하면,\
 **next(1)\
 next(2)\
 ...**
@@ -225,7 +225,7 @@ ReplaySubject는 subscriber가 새로 생기면, 항상 데이터의 처음부�
 
 //다이어그램
 
-두번쨰 구독자가 구독했을 때, 지금까지 발행한 모든 값을 두번쨰 구독자에게 모두 주는 것을 볼 수 있다.
+두번쨰 구독자가 구독했을 때, 지금까지 발행한 모든 값을 두번째 구독자에게 모두 주는 것을 볼 수 있다.
 
 ~~~swift 
 let publishSubject = PublishSubject<String>()
