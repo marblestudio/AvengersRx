@@ -19,8 +19,9 @@ Subject에는 4가지 종류가 있다.
 하나씩 차근차근히 보도록 하자.
 
 ## AsyncSubject
-`AsyncSubject`는 소스 Observable로부터 배출된 마지막 값(만)을 배출하고 소스 Observable의 동작이 완료된 후에야 동작한다.
-// AsyncSubject 마블 다이어 그램
+`AsyncSubject`는 소스 Observable로부터 배출된 마지막 값(만)을 배출하고 소스 Observable의 동작이 완료된 후에야 동작한다.\
+
+![async](./images/AsyncSubject.png)
 
 `AsyncSubject`에 보면 되는건 그냥 **마지막 데이터**다. 
 내가 마지막 데이터에만 관심이 있다면 AsyncSubject를 사용하면 된다.
@@ -103,7 +104,7 @@ asyncSubject가 onCompleted를 호출하고 나서, 데이터를 한번 더 발�
 
 옵저버가 BehaviorSubject를 구독하기 시작하면, 옵저버는 소스 Observable이 가장 최근에 발행한 항목(또는 아직 아무 값도 발행되지 않았다면 맨 처음 값이나 기본 값)의 발행을 시작하며 그 이후 소스 Observable(들)에 의해 발행된 항목들을 계속 발행한다.
 
-// 마블 다이어그램
+![behavior](./images/S.BehaviorSubject.png)
 
 ```BehaviorSubject```에서 주요 하게 봐야 할 부분은 **초기값**이다. 
 초기값을 생성시에 넣어주게 되어있다. 
@@ -167,7 +168,7 @@ behaviorSubject.subscribe(onNext: { (string) in
 ```BehaviorSubject```도 ```asyncSubject```처럼
 만약, 소스 Observable이 오류 때문에 종료되면 BehaviorSubject는 아무런 항목도 배출하지 않고 소스 Observable에서 발생한 오류를 그대로 전달한다.
 
-//마블 다이어그램
+![behavior](./images/S.BehaviorSubject.e.png)
 
 ## PublishSubject
 
@@ -180,6 +181,8 @@ PublishSubject는 구독 이후에 소스 Observable(들)이 배출한 항목들
 PublishSubject에서 가장 중요한 점은 **구독 이후에**라는 말이다.
 
 먼저 마블 다이어그램을 보자. 
+
+![publish](./images/S.PublishSubject.png)
 
 ```AsyncSubject```처럼 마지막 데이터만 발행하거나, ```BehaviorSubject```처럼 발행한 값이 없을 때, 기본값을 대신 발행하지도 않는다.
 해당 시간에 발생한 데이터를 **그대로** subscriber에게 전달한다. 
@@ -223,7 +226,7 @@ ReplaySubject는 subscriber가 새로 생기면, 항상 데이터의 처음부�
 
 마블 다이어그램을 보자. 
 
-//다이어그램
+![replay](./images/S.ReplaySubject.png)
 
 두번쨰 구독자가 구독했을 때, 지금까지 발행한 모든 값을 두번째 구독자에게 모두 주는 것을 볼 수 있다.
 
