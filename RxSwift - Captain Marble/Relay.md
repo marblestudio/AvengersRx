@@ -7,7 +7,7 @@ Relay는 이제껏 배운 Subject와 달리 RxSwift에 있는 것이 아니라, 
 즉 뭔가 UI와 관련있을 것 같지 않은가?
 맞ㄷㅏ
 
-일단 Relay의 종류에는 2가지가 있는데, ```PublishRelay```와 ```BehaviorRelay```가 있다.\
+일단 Relay의 종류에는 2가지가 있는데, ```PublishRelay```와 ```BehaviorRelay```가 있다.
 
 
 ## PublishRelay / BehaviorRelay
