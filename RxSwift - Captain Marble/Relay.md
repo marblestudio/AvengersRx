@@ -84,3 +84,8 @@ print(behaviorRelay.value)
 
 여러 stream으로 부터 PublishSubject 로 바인딩해줄 때, stream들 중에서 하나라도 complete 를 흘려보내게 되면, PublishSubject는 중단되고 말것이다.
 
+**~Subject는 .completed, .error의 이벤트가 발생하면 subscribe가 종료되는 반면,
+~Relay는 `dispose`되기 전까지 작동하기 때문에 UI Event에서 사용하기 적절하다.**
+
+
+
