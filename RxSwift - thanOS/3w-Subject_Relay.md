@@ -179,6 +179,41 @@ let replaySubject = ReplaySubject<String>.createUnbounded()
 
 # Relay
 
+RxSwift의 Subject와 다르게 Relay는 RxCocoa의 클래스다. Relay는 RxCocoa4에서 구현되었고, **PublishRelay** 와 **BehaviorRelay** 두가지가 있다. 
+
+Relay의 특징이라 하면 onComplete, onError가 없다는 것이다. 시퀀스가 종료되기 위해서는 오직 dispose로만 가능하다. 그래서 보통 UI작업에 이용된다. (API통신하다가 에러나서 스트림이 끊기면.. 다시 시도못하자너 ㅠㅠ)
+
+##### 1) PublishRelay
+
+![publish](./images/3w_Subject_Relay/PublishRelay.png)
+
+위 이미지 처럼 RxCocoa에 있는 클래스다. PublishSubject를 wrapper 해주고 있다. 즉, PublishSubject처럼 구독 이후에 값을 받을 수 있다는 것이다. 
+
+~~~swift
+let publishRelay = PublishRelay<String>()
+publishRelay.accept("1")
+publishRelay.accept("2")
+publishRelay.subscribe { (string) in
+    print(string)
+}
+publishRelay.accept("3")
+publishRelay.accept("4")
+~~~
+
+PublishSubject에서 처럼 onNext()로 값을 방출 했다면, PublishRelay는 accecpt()를 이용하여 값을 방출한다.
+
+##### 2) BehaviorRelay
+
+![publish](./images/3w_Subject_Relay/BehaviorRelay.png)
+
+역시 BehaviorRelay는 BehaviorSubject의 wrapper 클래스이다. PublishSubject와의 차이점이 있다면 value가 있다는 것인데, 저장된 값을 value를 통해 가져올 수 있다. (하지만 get-only-property임을 주의하자.)
 
 
-출처 : https://brunch.co.kr/@tilltue/4
+
+<br/>
+
+출처 : 
+
+-https://brunch.co.kr/@tilltue/4
+
+-https://jinshine.github.io/2019/01/05/RxSwift/3.Subject%EB%9E%80/
