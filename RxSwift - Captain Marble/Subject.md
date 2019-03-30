@@ -230,22 +230,42 @@ ReplaySubject는 subscriber가 새로 생기면, 항상 데이터의 처음부�
 
 두번쨰 구독자가 구독했을 때, 지금까지 발행한 모든 값을 두번째 구독자에게 모두 주는 것을 볼 수 있다.
 
-~~~swift 
-let publishSubject = PublishSubject<String>()
-        
-publishSubject.subscribe { (string) in
-        print(string)
-}
-        
-Observable<Int>.interval(1.0, scheduler: MainScheduler.instance).subscribe(onNext: { num in
-        publishSubject.onNext("\(num)")
-})
+ReplaySubject는 옵저버가 구독을 시작한 시점과 관계 없이 소스 Observable(들)이 배출한 모든 항목들을 모든 옵저버에게 배출한다.
+
+ReplaySubject는 몇 개의 생성자 오버로드를 제공하는데 이를 통해, 재생 버퍼의 크기가 특정 이상으로 증가할 경우, 또는 처음 배출 이후 지정한 시간이 경과할 경우 오래된 항목들을 제거한다.
+
+만약, ReplaySubject을 옵저버로 사용할 경우, 멀티 스레드 환경에서는 Observable 계약 위반과 주제에서 어느 항목 또는 알림을 먼저 재생해야 하는지 알 수 없는 모호함이 동시에 발생할 수 있기 때문에 **(비순차적) 호출을 유발시키는 onNext(또는 그 외 on) 메서드를 사용하지 않도록 주의해야 한다.**
+
+
+ReplaySubject는 다른 Subject와 다르게 생성방식이 조금 다르다.
+~~~swift
+let replaySubject = ReplaySubject<String>.create(bufferSize: 1)
 ~~~
 
+create메소드를 호출하며, bufferSize를 주도록 되어있다.  갑자기 웬 버퍼? Replay는 그냥 구독하면 데이터를 처음부터 끝까지 주는애 아닌가? 
 
+맞다. 근데 **버퍼크기**만큼만 저장(?)하고 있다 준다. 
 
+> ReplaySubject는 구독 전에 발생한 이벤트를 버퍼에 넣고, 버퍼에 있던 이벤트를 구독 후에 전달합니다. 버퍼 크기를 설정한 만큼 구독 후 이벤트를 전달합니다. 만약 버퍼 크기가 0이라면, PublishSubject와 같은 역할을 하게 됩니다.
 
+예제를 보자. 위에 ReplaySubject는 버퍼사이즈가 1이다. 
+~~~swift
+let replaySubject = ReplaySubject<String>.create(bufferSize: 1)
 
+replaySubject.onNext("zedd")
+replaySubject.onNext("alan")
+
+replaySubject.subscribe { (string) in
+    print(string)
+}
+~~~
+
+자, 이러면 결과가 뭐가 나와야 겠는가?
+ReplaySubject의 정의대로라면 구독하는 순간, 이때까지 발행했던 모든 데이터를 subscriber에게 줘야한다. 하지만 bufferSize가 1이기 떄문에..
+결과는
+
+**next("alan")**\
+만 나오게 된다. 
 
 
 
