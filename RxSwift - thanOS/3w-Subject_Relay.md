@@ -181,7 +181,7 @@ let replaySubject = ReplaySubject<String>.createUnbounded()
 
 RxSwift의 Subject와 다르게 Relay는 RxCocoa의 클래스다. Relay는 RxCocoa4에서 구현되었고, **PublishRelay** 와 **BehaviorRelay** 두가지가 있다. 
 
-Relay의 특징이라 하면 onComplete, onError가 없다는 것이다. 시퀀스가 종료되기 위해서는 오직 dispose로만 가능하다. 그래서 보통 UI작업에 이용된다. (API통신하다가 에러나서 스트림이 끊기면.. 다시 시도못하자너 ㅠㅠ)
+Relay의 특징이라 하면 onComplete, onError가 없다는 것이다. 시퀀스가 종료되기 위해서는 오직 dispose로만 가능하다. 그래서 보통 UI작업에 이용된다. (API통신하다가 에러나서 스트림이 끊기면.. 다시 시도못하니까ㅠ)
 
 ##### 1) PublishRelay
 
