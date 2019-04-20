@@ -10,6 +10,7 @@ Swift에서 .filter()와 비슷하다고 보면 될 것으로 보인다.
 ![ignoreElements](./images/4w/ignoreElements.png)
 
 위에서 보이는 것과 같이 .next이벤트는 하나도 받지 않는다. .error 혹은 .complete 이벤트 같이 종료시키는 이벤트만 받는다. 
+이전에 배웠었던 .empty()와 비슷하다.
 
 ~~~swift
 let strike = PublishSubject<String>()
@@ -89,7 +90,7 @@ Observable.of(1,2,3,4,5,6)
 
 ![skip](./images/4w/skipWhile.png)
 
-skipWhile은 filter와 반대라고 생각하면 된다. filter는 true 일 때 방출했던거와 달리 skipWhile은 **false** 일 때 방출한다.
+skipWhile은  filter는 true 일 때 방출했던거와 달리 skipWhile은 **false**가 나오고 나서부터 방출한다.
 
 ~~~swift
  let disposeBag = DisposeBag()
@@ -155,7 +156,7 @@ take는 n개까지만 이벤트를 방출 시키는 오퍼레이터다.
 
 2. takeWhile()
 
-takeWhile은 true일 때만 동작을 한다. (.filter랑 다른게 뭐지..?) 
+takeWhile은 true일 때만 동작을 한다. (false가 한번 나오면 그 이후로 dispose된다.)
 ![skip](./images/4w/takeWhile.png)
 
 보통 RxSwift에서는 enumerated()와 함께 쓰기도 한다. Swift 표준 라이브러리에 있는 enumerated와 유사하게 Observable의 요소와 인덱스를 포함하는 튜플을 방출한다. 
@@ -204,6 +205,8 @@ trigger 옵저버블이 이벤트를 발생시키기 전까지 subject의 옵저
 trigger가 X 이벤트를 방출하고 난 이후로 subject 이벤트는 아무것도 방출 시키지 않는다.
 
 아래의 코드는 takeUntil을 이용하여 disposeBag처럼 구독을 dispose하는 방법이다.
+
+//잠깐 퀴즈 ~~ 
 
 ~~~swift
 someObservable
