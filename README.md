@@ -20,8 +20,11 @@
 
 ## Operator
 > RxJava기준 Operator임. 
-###  필터링 연산자
+>
+> ###  필터링 연산자
 - ignoreElements, elementAt, filter, skip, skipWhile, skipUntil, take, takeWhile, enumerated, takeUntil, distinctUntilChanged
+  - [thanOS - Filtering Operator](<https://github.com/marblestudio/AvengersRx/blob/master/RxSwift%20-%20thanOS/4w-Filtering_Operator.md>)
+  - [HYDRxA - Filtering Operator](<https://github.com/marblestudio/AvengersRx/blob/master/RxJava%20-%20HYDRxA/4week%20-%20filtering_operator.md>)
 
 ### 변환 연산자
 - toArray, map, enumerated, flatMap, flapMapLatest, materialize, dematerialize, unwrap
