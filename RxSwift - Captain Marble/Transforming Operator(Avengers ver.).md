@@ -9,7 +9,8 @@
                 print(avengers)
             })
 ~~~
-결과는? ["Iron Man", "Captain America", "Captain Marvel"]
+결과는? 
+**["Iron Man", "Captain America", "Captain Marvel"]**
 
 ## map
 
@@ -44,8 +45,38 @@ Observable.of("Iron Man", "Captain America", "Captain Marvel")
 (index: 2, element: "Captain Marvel")**
 
 
+가 나오게 된당
+
+## flatMap
+flatMap도 하나의 map임. 데이터를 조작할 수 있다. 
+하나의 Observable이 발행하는 항목들을 **여러개의 Observable로 변환**하고, 항목들의 배출을 차례차례 줄 세워 하나의 Observable로 전달한다.
+```map()```은 원하는 입력값을 어떤 함수에 넣어서 변환 할 수 있는 1:1 함수이지만,
+```flatMap()```은 똑같이 함수에 넣더라도 **결과가 Observable**로 나온다.
 
 
+~~~swift 
+Observable.just(4).flatMap { Observable.just($0 * 2) }.subscribe(onNext: { (num) in
+            print(num)
+        }, onCompleted: {
+            print("on complete")
+        })
+~~~
+결과: 8 "on complete"
+flatMap에서 Observable로 만들어줘서 리턴해줘야함. 
+
+## flatMapLatest(RxSwift) / switchMap(RxJava)
+
+switchMap은 또 concatMap이랑은 다름.
+concatMap()이 인터리빙이 발생 할 수 있는 상황에서 동작의 순서를 보장해준다면, switchMap()은 순서를 보장하기 위해 기존에 진행중이던 작업을 바로 중단합니다. 
+![deferred](./images/switchMap.png)
+
+
+즉 마지막에 들어온 데이터의 처리는 보장한다!
+switchMap은 센서의 값을 얻어와서 처리하는 경우 유용하다. 센서값은 중간값보다는 최종적인 값으로 결과를 처리하는 경우가 많기 때문.
+
+> RxSwift에서는 **flatMapLatest**라는 이름으로 있다.
+
+## materialize
 
 
 
