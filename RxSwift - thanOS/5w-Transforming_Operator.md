@@ -65,7 +65,7 @@ charlotte.score.onNext(100) // Printed: 80 85 90 95 100
 위의 flatMap에서 최신의 이벤트만 받고 싶을 때 사용하는 것이 flatMapLatest다. 
 map + switchLatest = flatMapLatest라고 보면 쉬울 것이다. (switchLatest는 combining Operator에서 다뤄볼것이다.) 
 
-![flatMapLatest](./images/5w/flatMapLatest.png)
+![flatMapLatest](./images/5w/flatmapLatest.png)
 
 \$0을 수신 후 10으로 변경 후, $1의 이벤트를 받고 \$1의 옵저버블로 변경한다. 그 후의 \$0의 이벤트가 발생되도 무시한다. 왜냐면 최신의 이벤트는 \$1이니까.. 
 
