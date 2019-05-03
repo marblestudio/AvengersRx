@@ -105,6 +105,89 @@ switchMap은 센서의 값을 얻어와서 처리하는 경우 유용하다. 센
 > RxSwift에서는 **flatMapLatest**라는 이름으로 있다.
 
 ## materialize
+materialize는 리턴타입이 Observable<Event<타입>>이다. 이벤트가 눈에 띈다. 
+
+//materialize 마블 다이어그램
+
+일단 예제를 먼저 보자. 
+
+~~~swift
+ var observable = PublishSubject<String>()
+        
+        observable
+        .materialize()
+        .subscribe(onNext: { (str) in
+            print(str)
+        })
+        
+        observable.onNext("Iron Man")
+        observable.onNext("Captain America")
+        observable.onNext("Captain Marvel")
+~~~
+
+이렇게 하면
+
+**next(Iron Man)\
+next(Captain America)\
+next(Captain Marvel)**
+
+이 나온다. 
+그러니까 지금 emit하는 "이벤트"를 받게 되는 것이다. 
+error나 complete를 emit하게 되면,
+
+error(에러어쩌구)
+completed
+
+로 받게 된다. 
+이걸 도대체 어따가 쓴담?
+
+## dematerialize
+
+**next(Iron Man)\
+next(Captain America)\
+next(Captain Marvel)**
+
+이렇게 받기 받았는데..value만 꺼내고 싶으면 어떻게함??
+dematerialize ㄱㄱ
+
+// dematerialize 마블 다이어그램
+
+위 예제를 사용하겠음.
+
+~~~swift
+var observable = PublishSubject<String>()
+        
+        observable
+        .materialize()
+        .dematerialize()
+        .subscribe(onNext: { (str) in
+            print(str)
+        })
+    
+        observable.onNext("Iron Man")
+        observable.onNext("Captain America")
+        observable.onNext("Captain Marvel")
+~~~
+
+materialize해주고 바로 다시 dematerialize해줬음 ㅎ
+그러면
+
+**Iron Man\
+Captain America\
+Captain Marvel**
+
+가 출력되게 된당.
+
+### unwrap
+
+있었는데 없어진듯?
+
+
+
+
+
+
+
 
 
 
