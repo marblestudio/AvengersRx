@@ -39,7 +39,9 @@ Observable.of("Iron Man", "Captain America", "Captain Marvel")
 
 이렇게 하면,
 
-**(index: 0, element: "Iron Man")\ (index: 1, element: "Captain America")\ (index: 2, element: "Captain Marvel")**
+**(index: 0, element: "Iron Man")\ 
+(index: 1, element: "Captain America")\ 
+(index: 2, element: "Captain Marvel")**
 
 
 
