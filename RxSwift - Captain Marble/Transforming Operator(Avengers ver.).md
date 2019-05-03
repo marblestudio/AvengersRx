@@ -12,6 +12,34 @@
 결과는? 
 **["Iron Man", "Captain America", "Captain Marvel"]**
 
+> 주의: toArray는 데이터를 주는 Observable이 complete되지 않으면 실행이 안된다. 예제로 보자. 
+
+~~~swift 
+ var observable = PublishSubject<String>()
+        
+        observable
+        .toArray()
+        .subscribe(onNext: { (str) in
+            print(str)
+        })
+        
+        observable.onNext("Iron Man")
+        observable.onNext("Captain America")
+        observable.onNext("Captain Marvel")
+~~~
+
+이렇게 있을 때, ["Iron Man", "Captain America", "Captain Marvel"]이 결과로 나오면 좋을 것 같지만 아무 결과도 나오지 않는다. observable이 complete를 안했기 때문. 
+
+~~~swift 
+observable.onNext("Iron Man")
+observable.onNext("Captain America")
+observable.onNext("Captain Marvel")
+        
+observable.onCompleted()
+~~~
+onCompleted를 해야지만 ["Iron Man", "Captain America", "Captain Marvel"]가 출력된다.
+
+
 ## map
 
 ~~~swift 
