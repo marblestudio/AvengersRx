@@ -155,20 +155,52 @@ Groot**
 
 combineLatest 마블 ㄷㅏ이어그램
 
+각 옵저버블에서 최신의 데이터가 emit될때마다 각 옵저버블의 최신 데이터들이 결합되어서 최종 옵저버블이 만들어진다. 
+
+~~~swift
+var observable = PublishSubject<String>()
+        
+        var galaxy = PublishSubject<String>()
+        
+        Observable.combineLatest(observable, galaxy, resultSelector: { (lastLeft, lastRight) in
+                
+                "\(lastLeft) \(lastRight)"
+                
+        }).subscribe(onNext: { (str) in
+            print(str)
+        })
+~~~
+
+자 이렇게 두개의 옵저버블을 combineLatest을 해주고 두 string을 결합시켜준걸 리턴한다.
+이제 onNext로 값을 보내보자.
 
 
+~~~swift
+observable.onNext("Iron Man")
+        galaxy.onNext("Star-Lord")
+        galaxy.onNext("Gamora")
+        
+        observable.onNext("Captain America")
+        observable.onNext("Captain Marvel")
+        
+        galaxy.onNext("Star-Lord")
+        galaxy.onNext("Gamora")
+        galaxy.onNext("Groot")
+~~~
+
+이렇게하면₩₩~~
+
+**Iron Man Star-Lord\
+Iron Man Gamora\
+Captain America Gamora\
+Captain Marvel Gamora\
+Captain Marvel Star-Lord\
+Captain Marvel Gamora\
+Captain Marvel Groot**
 
 
-
-
-
-
-
-
-
-
-
-
+이렇게 결합된당. 
+하나씩 살펴보면, 처음 아이언맨이 들어갔을 때는 아무것도 안나오고 스타로드가 들어갔을 때, 결합되서 나온것을 볼 수 있다. 두번째로 가모라가 들어갔을 때 (아이언맨이랑 다른 옵저버블) 아이언맨이 있는 옵저버블에는 가장 최신의 데이터가 아이언맨이므로 가모라는 아이언맨과 combine되게 된다.
 
 
 
