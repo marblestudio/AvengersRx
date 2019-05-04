@@ -540,3 +540,121 @@ static final class DematerializeObserver<T, R> implements Observer<T>, Disposabl
 ```
 
 위 코드의 onNext의 부분처럼 selector를 이용하여 Notification의 타입을 변경한다.
+
+
+
+## startWith
+
+Observable을 emit하기 전에 전달받은 Observable을 먼저 emit한다.
+
+![img](https://raw.github.com/wiki/ReactiveX/RxJava/images/rx-operators/startWith.png)
+
+```kotlin
+val foo = Observable.just(1, 2, 3)
+val bar = Observable.just(4, 5, 6)
+
+foo.startWith(bar)
+	.subscribe { println(it) }
+```
+
+위에 대한 결과는
+
+```
+4
+5
+6
+1
+2
+3
+```
+
+
+
+## concat
+
+두 Observable을 합쳐주는 오퍼레이터
+
+![img](https://raw.github.com/wiki/ReactiveX/RxJava/images/rx-operators/concat.png)
+
+```kotlin
+val foo = Observable.just(1, 2, 3)
+val bar = Observable.just(4, 5, 6)
+
+Observable.concat(foo, bar)
+	.subscribe { println(it)  }
+```
+
+위에 대한 결과는
+
+```
+1
+2
+3
+4
+5
+6
+```
+
+
+
+## merge
+
+여러 Observable을 하나로 합쳐주는 오퍼레이터다. emit된 순서대로 값을 반환한다.
+
+![img](https://raw.githubusercontent.com/wiki/ReactiveX/RxJava/images/rx-operators/merge.png)
+
+```kotlin
+val foo = Observable.intervalRange(1, 3, 0, 100, TimeUnit.MILLISECONDS)
+val bar = Observable.intervalRange(4, 3, 50, 100, TimeUnit.MILLISECONDS)
+
+Observable.merge(foo, bar)
+	.blockingSubscribe { println(it)  }
+```
+
+위에 대한 결과는
+
+```
+1
+4
+2
+5
+3
+6
+```
+
+
+
+## combineLatest
+
+여러 Observable의 최신 값들의 합을 제공하고 최신값으로 업데이트 될때마다 emit하는 오퍼레이터
+
+![img](https://raw.githubusercontent.com/wiki/ReactiveX/RxJava/images/rx-operators/combineLatest.png)
+
+```kotlin
+val foo = Observable.intervalRange(1, 3, 0, 100, TimeUnit.MILLISECONDS)
+val bar = Observable.intervalRange(4, 3, 50, 100, TimeUnit.MILLISECONDS)
+
+Observables.combineLatest(foo, bar)
+	.blockingSubscribe { println(it)  }
+```
+
+아까 merge에 대한 결과는
+
+```
+1
+4
+2
+5
+3
+6
+```
+
+이었다 그러므로 위에 대한 결과는
+
+```
+(1, 4)
+(2, 4)
+(2, 5)
+(3, 5)
+(3, 6)
+```
