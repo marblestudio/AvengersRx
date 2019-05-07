@@ -28,6 +28,8 @@
 
 ### 변환 연산자
 - toArray, map, enumerated, flatMap, flapMapLatest, materialize, dematerialize, unwrap
+  - [Captain Marble - Transforming Operator(Avengers ver.)](<https://github.com/marblestudio/AvengersRx/blob/master/RxSwift%20-%20Captain%20Marble/Transforming%20Operator(Avengers%20ver.).md>)
+  - [viSIon - Transforming&Combining.md](<https://github.com/marblestudio/AvengersRx/blob/master/RxJava%20-%20viSIon/5W%20-%20Transforming%26Combining.md>)
 
 ### 결합 연산자
 - startWith, concat, concatMap, merge, merge(maxConcurrent), combineLatest, zip, withLatestFrom, sample, amb, switchLatest, reduce, scan
