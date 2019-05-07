@@ -31,8 +31,13 @@
   - [Captain Marble - Transforming Operator(Avengers ver.)](<https://github.com/marblestudio/AvengersRx/blob/master/RxSwift%20-%20Captain%20Marble/Transforming%20Operator(Avengers%20ver.).md>)
   - [viSIon - Transforming&Combining.md](<https://github.com/marblestudio/AvengersRx/blob/master/RxJava%20-%20viSIon/5W%20-%20Transforming%26Combining.md>)
 
-### 결합 연산자
+### 결합 연산자 (1) 
 - startWith, concat, concatMap, merge, merge(maxConcurrent), combineLatest, zip, withLatestFrom, sample, amb, switchLatest, reduce, scan
+  - [Captain Marble - Combining Operators](<https://github.com/marblestudio/AvengersRx/blob/master/RxSwift%20-%20Captain%20Marble/Combining%20Operators.md>)
+  - [viSIon - Transforming&Combining.md](<https://github.com/marblestudio/AvengersRx/blob/master/RxJava%20-%20viSIon/5W%20-%20Transforming%26Combining.md>)
+  
+### 결합 연산자 (2) 
+- zip, withLatestFrom, sample, amb, switchLatest, reduce, scan
 
 ### 시간 기반 연산자
 - replay, replayAll, buffer, window, delaySubscription, interval, timer, timeout
