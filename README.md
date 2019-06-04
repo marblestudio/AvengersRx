@@ -39,6 +39,11 @@
   
 ### 결합 연산자 (2) 
 - zip, withLatestFrom, sample, amb, switchLatest, reduce, scan
+  - [HYDRxA - Combining Operators](<https://github.com/marblestudio/AvengersRx/blob/master/RxJava%20-%20HYDRxA/6week%20-%20Combining%20Operator.md>)
+  - [thanOS - Combining Operators](<https://github.com/marblestudio/AvengersRx/blob/master/RxSwift%20-%20thanOS/6w-Combining_Operator(2).md>)
 
 ### 시간 기반 연산자
 - replay, replayAll, buffer, window, delaySubscription, interval, timer, timeout
+  - [HYDRxA - 시간 및 기타 Operator](<https://github.com/marblestudio/AvengersRx/blob/master/RxJava%20-%20HYDRxA/6week%20-%20%EC%8B%9C%EA%B0%84%20%EB%B0%8F%20%EA%B8%B0%ED%83%80%20Operator.md>)
+  - [thanOS - Time_Based_Operators](<https://github.com/marblestudio/AvengersRx/blob/master/RxSwift%20-%20thanOS/6w-Time_Based_Operators.md>)
+
